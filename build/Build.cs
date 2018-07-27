@@ -2,67 +2,70 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/vscode/blob/master/LICENSE
 
-using System;
+using Nuke.Common;
+using Nuke.Common.Git;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Nuke.Common.Git;
-using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.NuGet;
-using Nuke.Common.Tools.Nunit;
-using Nuke.Core;
-using Nuke.Core.Utilities;
-using Nuke.Core.Utilities.Collections;
-using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
-using static Nuke.Common.Tools.NuGet.NuGetTasks;
-using static Nuke.Core.Tooling.NuGetPackageResolver;
-using static Nuke.Core.IO.FileSystemTasks;
-using static Nuke.Core.IO.PathConstruction;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Nuke.Common.IO;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
+using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
-using static Nuke.Common.Tools.Nunit.NunitTasks;
+using static Nuke.Common.Tools.Npm.NpmTasks;
+
 
 class Build : NukeBuild
 {
-    // Console application entry. Also defines the default target.
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    [Parameter] readonly string Source = "https://resharper-plugins.jetbrains.com/api/v2/package";
-    [Parameter] readonly string ApiKey;
+    [Parameter] readonly string AccessToken;
 
-    [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository GitRepository;
 
-    string ProjectFile => SourceDirectory / "ReSharper.Nuke" / "ReSharper.Nuke.csproj";
+    string PackageFile => OutputDirectory / "vscode-nuke.vsix";
+    string VscePath => NodeModulesPath / "vsce" / "out" / "vsce";
+    string TSLintPath => NodeModulesPath / "tslint" / "bin" / "tslint";
+    PathConstruction.AbsolutePath NodeModulesPath => RootDirectory / "node_modules";
+    string NodePath => ToolPathResolver.GetPathExecutable("node");
 
     Target Clean => _ => _
         .Executes(() =>
         {
-            DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));
+            DeleteDirectory(RootDirectory / "node_modules");
             EnsureCleanDirectory(OutputDirectory);
         });
 
-    Target Restore => _ => _
+    Target Install => _ => _
         .DependsOn(Clean)
         .Executes(() =>
         {
-            MSBuild(s => DefaultMSBuildRestore);
+            Npm("install");
         });
 
-    Target Compile => _ => _
-        .DependsOn(Restore)
-        .Executes(() =>
-        {
-            MSBuild(s => DefaultMSBuildCompile);
+    Target Compile => _ => _ 
+        .DependsOn(Install)
+        .Executes(() => {
+            Npm("run compile");
         });
-
-    Target Test => _ => _
+        
+    Target CheckStyle => _ => _
         .DependsOn(Compile)
         .Executes(() =>
         {
-            Nunit3(s => s
-                .AddInputFiles(GlobFiles(RootDirectory / "tests", $"**/bin/{Configuration}/*.Tests.dll"))
-                .AddResults(OutputDirectory / "test-result.xml"));
+            var tsLintCommand = $"{TSLintPath} --project {RootDirectory}";
+            if (IsServerBuild)
+            {
+                tsLintCommand += $" --format checkstyle --out {OutputDirectory / "checkstyle.xml"}";
+            }
+            StartProcess(NodePath, tsLintCommand).AssertZeroExitCode();
         });
 
     string ChangelogFile => RootDirectory / "CHANGELOG.md";
@@ -76,47 +79,33 @@ class Build : NukeBuild
             FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
 
             Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.SemVer}.\"");
-            Git($"tag -f {GitVersion.SemVer}");
+            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
         });
 
     Target Pack => _ => _
-        .DependsOn(Compile)
+        .DependsOn(Install, Changelog)
         .Executes(() =>
         {
-            var releaseNotes = ChangelogSectionNotes
-                .Select(x => x.Replace("- ", "\u2022 ").Replace("`", string.Empty).Replace(",", "%2C"))
-                .Concat(string.Empty)
-                .Concat($"Full changelog at {GitRepository.GetGitHubBrowseUrl(ChangelogFile)}")
-                .JoinNewLine();
-
-            GlobFiles(SourceDirectory, "*.nuspec")
-                .ForEach(x => NuGetPack(s => DefaultNuGetPack
-                    .SetTargetPath(x)
-                    .SetBasePath(Path.GetDirectoryName(x))
-                    .SetProperty("wave", GetWaveVersion(ProjectFile) + ".0")
-                    .SetProperty("currentyear", DateTime.Now.Year.ToString())
-                    .SetProperty("releaseNotes", releaseNotes)
-                    .EnableNoPackageAnalysis()));
+            UpdateVersion(GitVersion.SemVer);
+            StartProcess(NodePath, $"{VscePath} package --out {PackageFile}").AssertZeroExitCode();
         });
 
     Target Push => _ => _
-        .DependsOn(Pack, Test, Changelog)
-        .Requires(() => ApiKey)
-        .Requires(() => Configuration.EqualsOrdinalIgnoreCase("Release"))
+        .DependsOn(Pack, Changelog)
+        .Requires(() => AccessToken)
         .Executes(() =>
         {
-            GlobFiles(OutputDirectory, "*.nupkg")
-                .ForEach(x => NuGetPush(s => s
-                    .SetTargetPath(x)
-                    .SetSource(Source)
-                    .SetApiKey(ApiKey)));
+            StartProcess(NodePath, $"{VscePath} publish --pat {AccessToken} --packagePath {PackageFile}").AssertZeroExitCode();
         });
 
-    static string GetWaveVersion(string packagesConfigFile)
+    void UpdateVersion(string version)
     {
-        var fullWaveVersion = GetLocalInstalledPackages(packagesConfigFile, includeDependencies: true)
-            .SingleOrDefault(x => x.Id == "Wave").NotNull("fullWaveVersion != null").Version.ToString();
-        return fullWaveVersion.Substring(startIndex: 0, length: fullWaveVersion.IndexOf(value: '.'));
+        var packageJsonPath = RootDirectory / "package.json";
+        var packageJson = TextTasks.ReadAllText(packageJsonPath);
+        var package = JObject.Parse(packageJson);
+        var packageVersion = package.Value<string>("version");
+        if (version == packageVersion) { return; }
+        package["version"] = version;
+        TextTasks.WriteAllText(packageJsonPath, package.ToString(Formatting.Indented));
     }
 }

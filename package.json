@@ -1,49 +1,154 @@
 {
-  "name": "nuke",
-  "displayName": "nuke vscode extension",
-  "description": "Our description",
-  "version": "0.1.0",
-  "publisher": "matkoch",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nuke-build/vscode"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nuke-build/vscode/issues"
-  },
-  "keywords": [
-    "nuke",
-    "build"
-  ],
-  "icon": "images/icon.png",
-  "galleryBanner": {
-    "theme": "dark",
-    "color": "#333333"
-  },
-  "engines": {
-    "vscode": "^1.23.1"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onLanguage:csharp"
-  ],
-  "main": "./output/source/extension",
-  "scripts": {
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "devDependencies": {
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^6.0.71",
-    "mocha": "^2.5.3",
-    "typescript": "^2.7.2"
-  },
-  "dependencies": {
-    "vscode": "^1.1.0",
-    "watch": "^1.0.2"
-  }
+    "name": "support",
+    "displayName": "NUKE Support",
+    "publisher": "nuke",
+    "description": "Adds support for NUKE. A cross-platform build automation system for C# developers.",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nuke-build/vscode"
+    },
+    "license": "SEE LICENSE IN LICENSE",
+    "bugs": {
+        "url": "https://github.com/nuke-build/vscode/issues"
+    },
+    "keywords": [
+        "csharp",
+        "build"
+    ],
+    "icon": "images/icon.png",
+    "galleryBanner": {
+        "theme": "dark",
+        "color": "#333333"
+    },
+    "engines": {
+        "vscode": "^1.24.1"
+    },
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Nuke Configuration",
+            "properties": {
+                "nuke.runTargetCodeLens": {
+                    "scope": "resource",
+                    "type": "object",
+                    "description": "The Nuke Run Target codelens configuration",
+                    "default": {
+                        "enabled": true,
+                        "skipDependencies": false
+                    },
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Show the 'Run Target' codelens for targets in Nuke build projects",
+                            "default": true
+                        },
+                        "skipDependencies": {
+                            "type": "boolean",
+                            "description": "Defines if the target dependencies should be skipped when running a target from the codelens",
+                            "default": false
+                        }
+                    }
+                },
+                "nuke.debugTargetCodeLens": {
+                    "scope": "resource",
+                    "type": "object",
+                    "description": "The Nuke Debug Target codelens configuration",
+                    "default": {
+                        "enabled": true,
+                        "skipDependencies": false
+                    },
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Show the 'Debug Target' codelens for targets in Nuke build projects",
+                            "default": true
+                        },
+                        "skipDependencies": {
+                            "type": "boolean",
+                            "description": "Defines if the target dependencies should be skipped when debugging a target from the codelens",
+                            "default": false
+                        }
+                    }
+                },
+                "nuke.targetRegularExpression": {
+                    "scope": "resource",
+                    "type": "string",
+                    "default": "Target\\s+([\\w\\-_]+)\\s*=>\\s*_\\s*=>\\s*_",
+                    "description": "Regular expression pattern to get targets from Nuke build classes"
+                },
+                "nuke.buildProjectPattern": {
+                    "scope": "resource",
+                    "type": "string",
+                    "default": "*build/*build*.csproj",
+                    "description": "Glob pattern to detect Nuke build projects"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "nuke.runTarget",
+                "title": "Nuke: Run Target"
+            },
+            {
+                "command": "nuke.debugTarget",
+                "title": "Nuke: Debug Target"
+            },
+            {
+                "command": "nuke.runSingleTarget",
+                "title": "Nuke: Run Target - Skip Dependencies"
+            },
+            {
+                "command": "nuke.debugSingleTarget",
+                "title": "Nuke: Debug Target - Skip Dependencies"
+            }
+        ],
+        "taskDefinitions": [
+            {
+                "type": "nuke",
+                "required": [
+                    "target"
+                ],
+                "properties": {
+                    "target": {
+                        "type": "string",
+                        "description": "The name of the target to run. If ommitted or empty the default target will be used"
+                    },
+                    "args": {
+                        "type": "array",
+                        "description": "Additional arguments to pass to the build"
+                    }
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "node ./node_modules/typescript/bin/tsc -p ./",
+        "watch": "node ./node_modules/typescript/bin/tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "tslint": "node ./node_modules/tslint/bin/tslint --project . --format checkstyle --out checkstyle.xml"
+    },
+    "main": "./out/extension",
+    "activationEvents": [
+        "workspaceContains:**/.nuke"
+    ],
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
+        "ts-node": "^7.0.0",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.1",
+        "vsce": "^1.45.1"
+    },
+    "dependencies": {
+        "vscode": "^1.1.6"
+    },
+    "extensionDependencies": [
+        "ms-vscode.csharp"
+    ]
 }

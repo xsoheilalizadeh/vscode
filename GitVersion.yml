@@ -1,5 +1,13 @@
 assembly-versioning-scheme: MajorMinorPatch
-mode: Mainline
-branches: {}
+mode: ContinuousDelivery
+
+branches:
+  master:
+    tag: ''
+  develop:
+    tag: 'alpha'
+  release:
+    tag: 'beta'
+
 ignore:
   sha: []

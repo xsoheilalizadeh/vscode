@@ -5,4 +5,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-- CodeLens support to invoke Run/Debug on a target
+- Added: Task provider to simply run Nuke targets.
+- Added: Codelens on build targets to directly run or debug them.
+- Added: Commands to debug and run targets with or without its dependencies.

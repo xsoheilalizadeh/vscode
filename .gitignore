@@ -263,5 +263,6 @@ paket-files/
 __pycache__/
 *.pyc
 
-!Nuke.ReSharper/
-output/
+/output/
+/out/
+/.vscode-test
