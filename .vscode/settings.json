@@ -1,0 +1,17 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.exclude": {
+        "output": true,
+        "out": true,
+        "node_modules/": true,
+        ".tmp": true
+    },
+    "search.exclude": {
+        "output": true, // set this to false to include "out" folder in search results
+        "out": true,
+        ".tmp": true
+
+    },
+    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+    "typescript.tsc.autoDetect": "off"
+}
