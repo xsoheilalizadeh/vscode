@@ -2,7 +2,6 @@
 .vscode-test/**
 out/test/**
 out/**/*.map
-out/
 src/**
 .gitignore
 .gitattributes
@@ -17,3 +16,4 @@ build.ps1
 build/
 Jenkinsfile
 .tmp/
+output/
