@@ -1,10 +1,16 @@
 <img src="https://github.com/nuke-build/presentation/raw/master/images/logo2.png" width="360" />
 
+
+[![Release](https://img.shields.io/vscode-marketplace/v/nuke.support.svg?label=release&colorB=0A7BBB&style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC%2FxhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAHdElNRQfiCAoFEhc1eYxzAAAFDUlEQVRo3sWZW2wUVRjHf9PSQlvA1CKltCuIiAGBAlooFhAqpasmvpgQ9UF9AIMhqIgvJj6okTdNNAYSKxoMEEChiAIJUTEaCEbxAoLFqCy19Eq5lN4o292%2FDzvdzM7slu7uTPkez%2FnO%2BX7znXP%2B5zLgoQlN1yGtk0%2BGvAw0CMAMtSiok3pTc5QthhnDBIhYi3boceUPK0QMgCT16Khe1lRlDhOEA0CSQjqnD7REucOQi7gAEbuqg3pGRTIMbwGYwREKE1QHqaN2hNdZGMSymM0dGbcQAICUAYTQTG3QXGXdApExwx%2BX1KxP5dfYeHN6kEk4YE2ph5%2BlH6PddOlbrVaJXXA9AhBCsy3hIxbUGb2t2cqQtwBCqFQ%2FJejwhMYnB5DkJBTAPLZQlsAhnyQXdlLuArifGuYlnbihAAgggzDEl0cz%2FEfMdS%2B8CSCAbHwsZiFfcFhhJ4IAyqhhjpvho53L0BrVq19Sm17VaDk9UJl%2B183sX01MYRUIoak6bBb2aZumWIVFCM3XSUfza%2BpyBcB0nqxDluVUNbCihVC5Tjkan9VzOuomAJqkA9GqVq1XngbC%2F2Fr2K%2BvNEu5%2Bs41ABPBp%2F3Ryj5t1WShhTpta9ahjSoQLgOYCCXaZ3E4rrWO5P%2BllcoSHgCYCMXaG5Ps2NQfUGlkgroDYFNCA0Ej6wjzhKlHmZbqa2ziXS4lkqpUzCHFBoImXiTESlucs7xBLUF3j5FxNiMDoJk99NgqDvOl2%2BHjAghgKRvJs1U8z3uUuH2adwAIYBkfMs3hm8NqdlKBqxdNG4AAKi3hQ7QSilYbLGIXqxjlHkIMQDT8PWZBLzU8Rm1M1kt4n3co8uAkLIQq9Xd0jV7QGuUIFekzhWNWb1hHtMBlIRJCD0fDh3VMSyKnXKEJ2m1DkAJ6VvmuAQih5frHLO5VjXwD810RhF0OhE5t1m%2BuAAihKgUGCrVWubIPTqF2OhBCNqFOQ4oNRnGSbAr5mdf4HlkFx0DQykuIJ2PU0b2bpRAaqfv0lCbHlxohNF7bHVlwJwMGQB9nOJMI0UDQxnrE0y5%2BeTJdGRhwkfXsIHxLAMxMtfMK291DSDqZBrSzgW1xEXo44dhDvTChAn2ikGUyhdWsrfJrjO047837gInwsYkQ1Gm9pVLnS4mHACB0u7aoQ99olYrjvwV7CmBmYWH8x5mhA6TxTGfAJY6n8QUAjNAYcgjSRdDNs24SAISZwBymYNCi8zTQTgfXY%2FcCbwG6OUUdxZRTxQsU0EUjAQIK0EAzl%2Bkk6CVOtGdBJsVU8CiL8ZGB6OEqbTRyngDnuUArV%2Bihf%2BhDdZO3YoBmw9YAMvFRgZ8KfJZrSz9dXKGFCwQIUE8jF%2BngeuIHnZQALBgjuJNF%2BHmQkpjLWcT66KSdZv4jQIAGmrhEJzfsQ5UigKV5FpNYzCOUMzEOxoBbLx200WQOVQOtXKabfiA9gChGNnexBD8LKLrp5hWimyu00kA95wiQx2bGpQUQHZRs7uYh%2FMyncMh7aB99jB7Ue2gAFoyRTGUpfsoY74puJQNgwRjFNJZRzQOMSwMjSB21KTYXQA73Ukk18yhIGqODY%2Bzma1rSSqMAcplOJdXMJX9IGGHqOcjnkbOT4cY4CiCPGSxnBaXkD%2BLay6%2Fs4QABQq6LuxAao3K9rh90Nc7On%2BDXrcsgAhjLTKpYzkxuwwBuUMd%2B9vEnN4ZpyxdC%2BVqhTQroF60d7Pf9%2F%2FjWo01%2B4cF9AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA4LTEwVDA1OjE4OjIzLTA0OjAwqL3qhAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wOC0xMFQwNToxODoyMy0wNDowMNngUjgAAAAASUVORK5CYII%3D)](https://marketplace.visualstudio.com/items?itemName=nuke.support)
+[![Downloads](https://img.shields.io/vscode-marketplace/d/nuke.support.svg?label=downloads&style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY%2Fl8WUAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABrUlEQVR4XuXQQW7DMAxE0Rw1R%2BtN3XAjBOpPaptfsgkN8DazIDB8bNu2NCxXguVKsFwJlrJs6KYGS1k2dFODpSwbuqnBUpYN3dRgKcuGbmqwlGVDNzVYyrKhmxosZdnQTQ2WsmzopgZLWTZ0U4OlLBu6qcFSlg3d1GApy4ZuarCUZUM3NVjKsqGbGixl2dBNDZaybOimBktZNnRTg6UsG7qpwVKWDd3UYPnB86VKfl5owx9YflHhCbvHByz%2FcecnHBofsNzhjk84PD5gudOdnnBqfMDygDs84fT4gOVBVz4hNT5gecIVT0iPD1ieNPMJyviAZcKMJ2jjA5ZJI5%2Bgjg9YCkY8QR8fsJSYTxgyPmApMp4wbHzAUpZ5wtDxAcsBzjxh%2BPiA5SBHnjBlfMByoD1PmDY%2BYDnYtydMHR%2BwnICeMH18wHKS9ydcMj5gOVE84bLxAcuVYLkSLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLFeC5UqwXAmW69gev7WIMc4gs9idAAAAAElFTkSuQmCC)](https://marketplace.visualstudio.com/items?itemName=nuke.support)
+[![Rating](https://img.shields.io/vscode-marketplace/r/nuke.support.svg?label=rating&style=flat-square&colorB=44CC11&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFKElEQVR4XuWbV6hdRRSGv98uBrsRWwjGhkGQGEUjiUFiQcUHEcQXwQdFo5FYiFGDLXZRCRpFUBFEHwQRfUhUVGJFLCiCNSpGsXdRQixZssKcsO%2F2lD2z2zn3Lgj3hjsza%2F5vrZm9p2wxwU1t6jezHYC%2FJf3RVj%2FaBnAVsF7S0gkHwMwmAV8G4Xu1lQWtZYCZLQE6kb9C0g1tZEErADLR3z6I%2FhVoJQvaAnAZkI%2F4Ykk3N50FjQMws62Br4FO9DuafwSmSFrbJIQ2AFwK3NRD5CJJt45bACH6XwA79xDZeBY0mgFmdgkwKMIXS7q9qSxoDECB6LcyFzQJ4EKgaGQXSlrWRBY0AsDMtgC%2B6jP281q%2FAaZK%2BqtuCE0BuACIjegCSXeNPIAQ%2Fc%2BB3SLFNJIFtWeAmZ0HpEZyvqR7IsFFFa8VQInod0R4Fvjb4T9RqiIK1w3gXODuiP50K3qOpHtLttGzem0AzGwzwN%2F6Ysd%2BvrPexrS6sqBOAGcDVUXuLEn31ZEFlQIwsynAfuHfYl%2FjV9RpzwJfQK0GPpbk%2F6%2FEogGY2eQgcN%2Fcz30AX%2Bo2Yb5k%2FsRhdKB0fpf0fUwHugIIOzYH5AR6ZF30djEOWij7Ww7MhqwBPuy27ygzOxY4JIidBrjwXVroeBMuf3AQIXsczFsOYC7wFLBlEz0YIh%2FrgOM3DIEAYUWDY7htDj6HnCBp1cY5wMxmAc9OAAgufp6kVz0KYybBAOFpwA8txqP5EdxxHfH%2FAxCGw6HA8%2BMQgos%2FWtIb2cj2egyONwi%2Fh7QfI75rBnTomJlD8Dlh2xEfCy7%2BKEnvdNPR903QzA4GXhhhCL%2BEtO8qvm8GZDLBIfic4Gf5o2Qufrak9%2Fp1utBawMymAy%2BNEAQ%2FYJk7SHyhDMhkgkNYFbGz21a2fBfG%2FEdFOlAoAzIQ9gdeHmIILn6WpM%2BKiI%2FKgBwEnxh3LeqkoXJ%2B7jAnRnwSgPCytDfgr5LDAsHFHylpTSzsqCGQbdzMHMKLwB6xTisu76L9OR8tPjkDMsPB9w4%2BqFhQbHO%2Bbd65bBVbd%2BxiKLa2mR0EvBtbr%2BLy0yW9n9pm8hAIc8HpwCOpziuqd5qkR1PbKgvgeuDyVOcV1Vsq6crUtsoCeAI4OdV5RfUel3RKaltlAXwK%2BNOgTVstyXeskywZQDj49I3Ftm29b%2BOlXqYoA8D3C15vW33wP0PS2yl9KQPgTOCBFKc11DlD0kMp7ZYBcBtwUYrTGurcIskvYEZbGQC%2Be%2BynSsNgKySdmNKRMgB8AbJ7itMa6qyRNDWl3SQAZrYNUPYzF5%2B0%2FPbYVsCNwMwUAZk6kyT9GdtGKoDZYSUY68%2FL%2B%2BHkEkmPZSub2anAdYBvuqTYEZJei62YCiDl7o%2Bv2K4BHpT0b7eOmtmmgD9d%2FFuiPSPFJN0iSQWwHJhfsIM%2FhY8jlksq9OJkZn5SvQDwDyt2LOhnmaSFBctuLJYKwLfE5gxw5nPEHYA%2FopLmCzPzQ5lFgAvzeaefPSdpXlMAPKq9IuP3e%2F1y1LWSfHu6tJmZf19wNeAXrzbv0eC3kqJvpEVngJm5E%2F%2FkJW%2F%2BTv5wmOAqu8SUmyj9EpZ%2Fa%2BT7EJt06cNOkn6OIZ4C4BjgmZyTJz1VJRXai4%2FpYI%2FJ8kAfWkD%2B5ccPQ3x4FrYUANl7%2F%2F7Y8Vvdbxb2WGFBMzscuDPzDnG%2BJJ%2BgC1sKgPuBGb4TJGllYU81FjSzk8LQeEWSP6ILWwqAwyQNyzJ4jFA%2F0s9fgBhEIhrAoAZH7e%2F%2FAQpbntC9rRA3AAAAAElFTkSuQmCC)](https://marketplace.visualstudio.com/items?itemName=nuke.support)
+
 ## Table of Contents
   - [What is NUKE](#what-is-nuke)
   - [Features](#features)
   - [Commands](#commands)
   - [Codelens](#codelens)
+  - [Task Provider](#task-provider)
   - [General Configuration](#general-configuration)
   - [Contributing](#contributing)
   - [License](#license)
@@ -23,6 +29,7 @@
 - Commands to debug and run targets with or without its dependencies
 
 ### Commands
+
 | Command                                | Description                                   |
 | -------------------------------------- | --------------------------------------------- |
 | Nuke: Run Target                       | Run a Nuke target                             |
@@ -30,6 +37,10 @@
 | Nuke: Debug Target                     | Debug a Nuke target                           |
 | Nuke: Debug Target - Skip Dependencies | Debug a Nuke target and skip its dependencies |
 
+Simply debug and run Nuke targets from everywhere in your project.
+
+![Command overview](images/command_overview.png)
+![Command target selection](images/command_target_selection.png)
 
 ### Codelens
 The extension uses codelens to allow running and debugging targets directly from any Nuke build class in the current workspace. Both the 'Run Target' and 'Debug Target' codelenses can be individually configured in the settings:
@@ -43,8 +54,11 @@ The configuration object accepts these properties:
 | enabled          | Defines if the codelens is enabled                | `true`  |
 | skipDependencies | Defines if target should run without dependencies | `false` |
 
+![Codelens](images/codelens.png)
 
+### Task provider
 
+![TaskProvider](images/task_provider.png)
 ### General Configuration
 | Name                         | Description                                                       | Default                                        | 
 | ---------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
