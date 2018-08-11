@@ -6,10 +6,8 @@ using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
+using Nuke.GitHub;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -19,22 +17,27 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.Npm.NpmTasks;
-
+using static Nuke.Common.IO.PathConstruction;
 
 class Build : NukeBuild
 {
+    const string c_repoName = "vscode";
+    const string c_repoOwner = "nuke-build";
+
     public static int Main() => Execute<Build>(x => x.Pack);
 
-    [Parameter] readonly string AccessToken;
+    [Parameter] readonly string GitHubAccessToken;
+    [Parameter] readonly string VSTSAccessToken;
 
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 
-    string PackageFile => OutputDirectory / "vscode-nuke.vsix";
+    string PackageFile => OutputDirectory / $"vscode-nuke-v{GitVersion.SemVer}.vsix";
     string VscePath => NodeModulesPath / "vsce" / "out" / "vsce";
     string TSLintPath => NodeModulesPath / "tslint" / "bin" / "tslint";
-    PathConstruction.AbsolutePath NodeModulesPath => RootDirectory / "node_modules";
     string NodePath => ToolPathResolver.GetPathExecutable("node");
+
+    AbsolutePath NodeModulesPath => RootDirectory / "node_modules";
 
     Target Clean => _ => _
         .Executes(() =>
@@ -50,12 +53,13 @@ class Build : NukeBuild
             Npm("install");
         });
 
-    Target Compile => _ => _ 
+    Target Compile => _ => _
         .DependsOn(Install)
-        .Executes(() => {
+        .Executes(() =>
+        {
             Npm("run compile");
         });
-        
+
     Target CheckStyle => _ => _
         .DependsOn(Compile)
         .Executes(() =>
@@ -65,6 +69,7 @@ class Build : NukeBuild
             {
                 tsLintCommand += $" --format checkstyle --out {OutputDirectory / "checkstyle.xml"}";
             }
+
             StartProcess(NodePath, tsLintCommand).AssertZeroExitCode();
         });
 
@@ -73,17 +78,16 @@ class Build : NukeBuild
     IEnumerable<string> ChangelogSectionNotes => ExtractChangelogSectionNotes(ChangelogFile);
 
     Target Changelog => _ => _
+        .OnlyWhen(ShouldUpdateChangelog)
         .OnlyWhen(() => InvokedTargets.Contains(nameof(Changelog)))
         .Executes(() =>
         {
-            FinalizeChangelog(ChangelogFile, GitVersion.SemVer, GitRepository);
-
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {GitVersion.MajorMinorPatch}\"");
+            FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
         });
 
     Target Pack => _ => _
-        .DependsOn(Install, Changelog)
+        .DependsOn(Compile)
+        .After(Changelog)
         .Executes(() =>
         {
             UpdateVersion(GitVersion.SemVer);
@@ -91,11 +95,52 @@ class Build : NukeBuild
         });
 
     Target Push => _ => _
-        .DependsOn(Pack, Changelog)
-        .Requires(() => AccessToken)
+        .DependsOn(Pack)
+        .Requires(() => VSTSAccessToken)
+        .Requires(() => GitRepository.Branch == "master")
         .Executes(() =>
         {
-            StartProcess(NodePath, $"{VscePath} publish --pat {AccessToken} --packagePath {PackageFile}").AssertZeroExitCode();
+            StartProcess(NodePath, $"{VscePath} publish --pat {VSTSAccessToken} --packagePath {PackageFile}").AssertZeroExitCode();
+        });
+
+    bool IsReleaseBranch => GitRepository.Branch.StartsWith("release/");
+
+    Target PrepareRelease => _ => _
+        .Before(Install)
+        .DependsOn(Changelog, Clean)
+        .OnlyWhen(() => GitRepository.Branch == "master" || GitRepository.Branch.StartsWith("release/"))
+        .Executes(() =>
+        {
+            Git($"add {ChangelogFile} package.json package.lock.json");
+            Git($"commit -m \"Finalize v{GitVersion.MajorMinorPatch}\"");
+            if (GitRepository.Branch != "master")
+            {
+                Git("checkout -b origin/master");
+                Git($"merge --no-ff --no-edit {GitRepository.Branch}");
+                Git($"branch -D {GitRepository.Branch}");
+            }
+        });
+
+    Target Release => _ => _
+        .DependsOn(Push, Changelog, PrepareRelease)
+        .Requires(() => GitRepository.Branch == "master" || IsReleaseBranch)
+        .Requires(() => GitHubAccessToken)
+        .Executes(async () =>
+        {
+            Git("push origin master");
+            if (IsReleaseBranch)
+            {
+                Git($"push --delete {GitRepository.Branch}");
+            }
+
+            await GitHubTasks.PublishRelease(new GitHubReleaseSettings()
+                .SetToken(GitHubAccessToken)
+                .SetArtifactPaths(new[] { PackageFile })
+                .SetRepositoryName("vscode")
+                .SetRepositoryOwner("nuke-build")
+                .SetCommitSha("master")
+                .SetTag($"NUKE VS Code Extension v{GitVersion.MajorMinorPatch}")
+                .SetReleaseNotes($"[Changelog](https://github.com/{c_repoOwner}/{c_repoName}/blob/{GitVersion.MajorMinorPatch}/CHANGELOG.md)"));
         });
 
     void UpdateVersion(string version)
@@ -104,8 +149,39 @@ class Build : NukeBuild
         var packageJson = TextTasks.ReadAllText(packageJsonPath);
         var package = JObject.Parse(packageJson);
         var packageVersion = package.Value<string>("version");
-        if (version == packageVersion) { return; }
+        if (version == packageVersion)
+        {
+            return;
+        }
+
         package["version"] = version;
         TextTasks.WriteAllText(packageJsonPath, package.ToString(Formatting.Indented));
+    }
+
+    bool ShouldUpdateChangelog()
+    {
+        bool TryGetChangelogSectionNotes(string tag, out string[] sectionNotes)
+        {
+            sectionNotes = new string[0];
+            try
+            {
+                sectionNotes = ExtractChangelogSectionNotes(ChangelogFile, tag).ToArray();
+                return sectionNotes.Length > 0;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+
+        var nextSectionAvailable = TryGetChangelogSectionNotes("vNext", out var vNextSection);
+        var semVerSectionAvailable = TryGetChangelogSectionNotes(GitVersion.MajorMinorPatch, out var semVerSection);
+        if (semVerSectionAvailable)
+        {
+            ControlFlow.Assert(!nextSectionAvailable, $"{GitVersion.MajorMinorPatch} is already in changelog.");
+            return false;
+        }
+
+        return nextSectionAvailable;
     }
 }
