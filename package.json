@@ -32,7 +32,7 @@
             "type": "object",
             "title": "Nuke Configuration",
             "properties": {
-                "nuke.runTargetCodeLens": {
+                "nuke.codeLens.runTarget": {
                     "scope": "resource",
                     "type": "object",
                     "description": "The Nuke Run Target codelens configuration",
@@ -53,7 +53,7 @@
                         }
                     }
                 },
-                "nuke.debugTargetCodeLens": {
+                "nuke.codeLens.debugTarget": {
                     "scope": "resource",
                     "type": "object",
                     "description": "The Nuke Debug Target codelens configuration",

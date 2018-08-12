@@ -44,8 +44,8 @@ Simply debug and run Nuke targets from everywhere in your project.
 
 ### Codelens
 The extension uses codelens to allow running and debugging targets directly from any Nuke build class in the current workspace. Both the 'Run Target' and 'Debug Target' codelenses can be individually configured in the settings:
-- `nuke.runTargetCodeLens`
-- `nuke.debugTargetCodeLens`
+- `nuke.codeLens.runTarget`
+- `nuke.codeLens.debugTarget`
 
 The configuration object accepts these properties:  
 
