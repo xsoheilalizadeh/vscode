@@ -106,6 +106,12 @@
                 "title": "Nuke: Debug Target - Skip Dependencies"
             }
         ],
+        "snippets": [
+            {
+                "language": "csharp",
+                "path": "./snippets/csharp.json"
+            }
+        ],
         "taskDefinitions": [
             {
                 "type": "nuke",
