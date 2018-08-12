@@ -98,6 +98,7 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .Requires(() => VSTSAccessToken)
         .Requires(() => GitRepository.Branch == "master")
+        .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
             StartProcess(NodePath, $"{VscePath} publish --pat {VSTSAccessToken} --packagePath {PackageFile}").AssertZeroExitCode();
@@ -108,31 +109,44 @@ class Build : NukeBuild
     Target PrepareRelease => _ => _
         .Before(Install)
         .DependsOn(Changelog, Clean)
-        .OnlyWhen(() => GitRepository.Branch == "master" || GitRepository.Branch.StartsWith("release/"))
         .Executes(() =>
         {
-            Git($"add {ChangelogFile} package.json package.lock.json");
-            Git($"commit -m \"Finalize v{GitVersion.MajorMinorPatch}\"");
-            if (GitRepository.Branch != "master")
+            UpdateVersion(GitVersion.SemVer);
+            var releaseBranch = IsReleaseBranch ? GitRepository.Branch : $"release/v{GitVersion.MajorMinorPatch}";
+            var isMasterBranch = GitRepository.Branch == "master";
+
+            if (!isMasterBranch && !IsReleaseBranch)
             {
-                Git("checkout -b origin/master");
-                Git($"merge --no-ff --no-edit {GitRepository.Branch}");
-                Git($"branch -D {GitRepository.Branch}");
+                Git($"checkout -b {releaseBranch}");
             }
+
+            if (!GitHasCleanWorkingCopy())
+            {
+                Git($"add {ChangelogFile} package.json package-lock.json");
+                var commitCommand = $"commit -m \"Finalize v{GitVersion.MajorMinorPatch}\"";
+                if (isMasterBranch) commitCommand += " -m \"+semver: skip\"";
+                Git(commitCommand);
+            }
+
+            if (!isMasterBranch)
+            {
+                Git("checkout master");
+                Git($"merge --no-ff --no-edit {releaseBranch}");
+                Git($"branch -D {releaseBranch}");
+            }
+            if (IsReleaseBranch)
+            {
+                Git($"push origin --delete {releaseBranch}");
+            }
+            Git($"push origin master");
         });
 
     Target Release => _ => _
         .DependsOn(Push, Changelog, PrepareRelease)
-        .Requires(() => GitRepository.Branch == "master" || IsReleaseBranch)
+        .Requires(() => GitRepository.Branch == "master")
         .Requires(() => GitHubAccessToken)
         .Executes(async () =>
-        {
-            Git("push origin master");
-            if (IsReleaseBranch)
-            {
-                Git($"push --delete {GitRepository.Branch}");
-            }
-
+        {;
             await GitHubTasks.PublishRelease(new GitHubReleaseSettings()
                 .SetToken(GitHubAccessToken)
                 .SetArtifactPaths(new[] { PackageFile })
@@ -145,17 +159,19 @@ class Build : NukeBuild
 
     void UpdateVersion(string version)
     {
-        var packageJsonPath = RootDirectory / "package.json";
-        var packageJson = TextTasks.ReadAllText(packageJsonPath);
-        var package = JObject.Parse(packageJson);
-        var packageVersion = package.Value<string>("version");
-        if (version == packageVersion)
+        void UpdateVersion(string filePath)
         {
-            return;
+            var packageJson = TextTasks.ReadAllText(filePath);
+            var package = JObject.Parse(packageJson);
+            var packageVersion = package.Value<string>("version");
+            if (version == packageVersion)
+            {
+                return;
+            }
+            TextTasks.WriteAllText(filePath, package.ToString(Formatting.Indented));
         }
-
-        package["version"] = version;
-        TextTasks.WriteAllText(packageJsonPath, package.ToString(Formatting.Indented));
+        UpdateVersion(RootDirectory / "package.json");
+        UpdateVersion(RootDirectory / "package-lock.json");
     }
 
     bool ShouldUpdateChangelog()
