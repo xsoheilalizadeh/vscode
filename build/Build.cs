@@ -79,7 +79,6 @@ class Build : NukeBuild
 
     Target Changelog => _ => _
         .OnlyWhen(ShouldUpdateChangelog)
-        .OnlyWhen(() => InvokedTargets.Contains(nameof(Changelog)))
         .Executes(() =>
         {
             FinalizeChangelog(ChangelogFile, GitVersion.MajorMinorPatch, GitRepository);
@@ -111,7 +110,7 @@ class Build : NukeBuild
         .DependsOn(Changelog, Clean)
         .Executes(() =>
         {
-            UpdateVersion(GitVersion.SemVer);
+            UpdateVersion(GitVersion.MajorMinorPatch);
             var releaseBranch = IsReleaseBranch ? GitRepository.Branch : $"release/v{GitVersion.MajorMinorPatch}";
             var isMasterBranch = GitRepository.Branch == "master";
 
@@ -168,7 +167,8 @@ class Build : NukeBuild
             {
                 return;
             }
-            TextTasks.WriteAllText(filePath, package.ToString(Formatting.Indented));
+            package["version"] = new JValue(version);
+            TextTasks.WriteAllText(filePath, package.ToString(Formatting.Indented) + EnvironmentInfo.NewLine);
         }
         UpdateVersion(RootDirectory / "package.json");
         UpdateVersion(RootDirectory / "package-lock.json");

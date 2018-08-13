@@ -1,8 +1,5 @@
 pipeline {
     agent { label 'nodejs' }
-    parameters {
-        string(name: 'GitBranchOrCommit', defaultValue: 'master', description: 'Git branch or commit to build.  If a branch, builds the HEAD of that branch.  If a commit, then checks out that specific commit.')
-    }
     options {
         timeout(time: 15, unit: 'MINUTES')
         ansiColor('xterm')
@@ -12,9 +9,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 sh 'git config --global user.name "nuke-bot" && git config --global user.email "34026207+nuke-bot@users.noreply.github.com"'
-                script {
-                    scm.branches = [[$class: 'hudson.plugins.git.BranchSpec', name: "refs/heads/${params.GitBranchOrCommit}"]]
-                }
                 checkout scm
             }
         }
