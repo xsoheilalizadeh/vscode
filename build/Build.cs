@@ -32,11 +32,10 @@ class Build : NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository GitRepository;
 
-    string PackageFile => OutputDirectory / $"vscode-nuke-v{GitVersion.SemVer}.vsix";
+    string PackageFile => OutputDirectory / $"nuke.support-v{GitVersion.SemVer}.vsix";
     string VscePath => NodeModulesPath / "vsce" / "out" / "vsce";
     string TSLintPath => NodeModulesPath / "tslint" / "bin" / "tslint";
     string NodePath => ToolPathResolver.GetPathExecutable("node");
-
     AbsolutePath NodeModulesPath => RootDirectory / "node_modules";
 
     Target Clean => _ => _
@@ -141,18 +140,19 @@ class Build : NukeBuild
         });
 
     Target Release => _ => _
-        .DependsOn(Push, Changelog, PrepareRelease)
+        .DependsOn(Push, PrepareRelease)
         .Requires(() => GitRepository.Branch == "master")
         .Requires(() => GitHubAccessToken)
         .Executes(async () =>
         {;
-            await GitHubTasks.PublishRelease(new GitHubReleaseSettings()
+            await GitHubTasks.PublishRelease(x => x
                 .SetToken(GitHubAccessToken)
                 .SetArtifactPaths(new[] { PackageFile })
                 .SetRepositoryName("vscode")
                 .SetRepositoryOwner("nuke-build")
                 .SetCommitSha("master")
-                .SetTag($"NUKE VS Code Extension v{GitVersion.MajorMinorPatch}")
+                .SetName($"NUKE VSCode Extension v{GitVersion.MajorMinorPatch}")
+                .SetTag($"{GitVersion.MajorMinorPatch}")
                 .SetReleaseNotes($"[Changelog](https://github.com/{c_repoOwner}/{c_repoName}/blob/{GitVersion.MajorMinorPatch}/CHANGELOG.md)"));
         });
 

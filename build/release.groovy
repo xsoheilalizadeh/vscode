@@ -58,7 +58,7 @@ void githubNotifyPending(String credentialsId, String owner, String repo, String
         description: description,
         repo: repo,
         sha: "${getCommitSha()}",
-        status: "${currentBuild.currentResult}",
+        status: 'PENDING',
         targetUrl: env.RUN_DISPLAY_URL
     )
 }
@@ -71,23 +71,23 @@ void githubNotify(String credentialsId, String owner, String repo, String contex
     switch(currentBuild.currentResult) {
         case 'SUCCESS': 
             description = 'Build finished succesfully.'
-            status = 'success'
+            status = 'SUCCESS'
         break
         case 'UNSTABLE': 
             description = 'Build finished with warnings.' 
-            status = 'error'
+            status = 'ERROR'
         break
         case 'FAILURE': 
             description = 'Build finished.'
-            status = 'failure'
+            status = 'FAILURE'
         break
         case 'NOT_BUILT':
             description = 'Build was skipped.'
-            status = 'failure'
+            status = 'FAILURE'
         break
         case 'ABORTED':
             description = 'Build was aborted.'
-            status = 'failure'
+            status = 'SUCCESS'
         break
     }
    
