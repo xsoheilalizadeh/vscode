@@ -11,6 +11,7 @@
   - [Commands](#commands)
   - [Codelens](#codelens)
   - [Task Provider](#task-provider)
+  - [Snippets](#snippets)
   - [General Configuration](#general-configuration)
   - [Contributing](#contributing)
   - [License](#license)
@@ -43,9 +44,10 @@ Simply debug and run Nuke targets from everywhere in your project.
 ![Command target selection](images/command_target_selection.png)
 
 ### Codelens
+
 The extension uses codelens to allow running and debugging targets directly from any Nuke build class in the current workspace. Both the 'Run Target' and 'Debug Target' codelenses can be individually configured in the settings:
-- `nuke.runTargetCodeLens`
-- `nuke.debugTargetCodeLens`
+- `nuke.codeLens.runTarget`
+- `nuke.codeLens.debugTarget`
 
 The configuration object accepts these properties:  
 
@@ -59,11 +61,19 @@ The configuration object accepts these properties:
 ### Task provider
 
 ![TaskProvider](images/task_provider.png)
+
 ### General Configuration
+
 | Name                         | Description                                                       | Default                                        | 
 | ---------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
 | nuke.buildProjectPattern     | Glob pattern to detect Nuke build project                         | `*build/*build*.csproj`                        |
 | nuke.targetRegularExpression | Regular expression pattern to get targets from Nuke build classes | `Target\\s+([\\w\\-_]+)\\s*=>\\s*_\\s*=>\\s*_` |
+
+### Snippets
+
+| Name        | Description                                       |
+| ----------- | ------------------------------------------------- |
+| ntarget     | Creates an empty Nuke target                      |
 
 ### Contributing
 

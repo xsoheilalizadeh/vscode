@@ -16,8 +16,8 @@ export interface TargetCodeLensConfiguration {
 
 export function getCodeLensConfiguration(config: vscode.WorkspaceConfiguration): CodeLensConfiguration {
     return {
-        runTargetCodeLensSettings: config.runTargetCodeLens,
-        debugTargetCodeLensSettings: config.debugTargetCodeLens
+        runTargetCodeLensSettings: config.codeLens.runTarget,
+        debugTargetCodeLensSettings: config.codeLens.debugTarget
     };
 }
 

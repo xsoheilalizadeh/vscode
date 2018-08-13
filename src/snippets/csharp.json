@@ -1,0 +1,11 @@
+{
+    "Nuke Target": {
+		"body": [
+			"Target ${1:TargetName} => _ => _",
+			"\t.Executes(() => {",
+			"\t\t$0",
+			"\t});"
+		],
+		"prefix": "ntarget"
+	}
+}
