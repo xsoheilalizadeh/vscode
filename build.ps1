@@ -14,7 +14,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $DotNetChannel = "2.0"
-$BuildProjectFile = "$PSScriptRoot\build\.build.csproj"
+$BuildProjectFile = "$PSScriptRoot\build\_build.csproj"
 
 $TempDirectory = "$PSScriptRoot\.tmp"
 
