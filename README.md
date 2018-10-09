@@ -1,5 +1,4 @@
-<img src="https://github.com/nuke-build/presentation/raw/master/images/logo2.png" width="360" />
-
+# <a href="https://nuke.build"><img src="https://github.com/nuke-build/all/raw/master/images/icon-glossy.png" width="20" /></a> VSCode NUKE extension
 
 [![Release](https://img.shields.io/vscode-marketplace/v/nuke.support.svg?label=release&colorB=0A7BBB&style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAABGdBTUEAALGPC%2FxhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAHdElNRQfiCAoFEhc1eYxzAAAFDUlEQVRo3sWZW2wUVRjHf9PSQlvA1CKltCuIiAGBAlooFhAqpasmvpgQ9UF9AIMhqIgvJj6okTdNNAYSKxoMEEChiAIJUTEaCEbxAoLFqCy19Eq5lN4o292%2FDzvdzM7slu7uTPkez%2FnO%2BX7znXP%2B5zLgoQlN1yGtk0%2BGvAw0CMAMtSiok3pTc5QthhnDBIhYi3boceUPK0QMgCT16Khe1lRlDhOEA0CSQjqnD7REucOQi7gAEbuqg3pGRTIMbwGYwREKE1QHqaN2hNdZGMSymM0dGbcQAICUAYTQTG3QXGXdApExwx%2BX1KxP5dfYeHN6kEk4YE2ph5%2BlH6PddOlbrVaJXXA9AhBCsy3hIxbUGb2t2cqQtwBCqFQ%2FJejwhMYnB5DkJBTAPLZQlsAhnyQXdlLuArifGuYlnbihAAgggzDEl0cz%2FEfMdS%2B8CSCAbHwsZiFfcFhhJ4IAyqhhjpvho53L0BrVq19Sm17VaDk9UJl%2B183sX01MYRUIoak6bBb2aZumWIVFCM3XSUfza%2BpyBcB0nqxDluVUNbCihVC5Tjkan9VzOuomAJqkA9GqVq1XngbC%2F2Fr2K%2BvNEu5%2Bs41ABPBp%2F3Ryj5t1WShhTpta9ahjSoQLgOYCCXaZ3E4rrWO5P%2BllcoSHgCYCMXaG5Ps2NQfUGlkgroDYFNCA0Ej6wjzhKlHmZbqa2ziXS4lkqpUzCHFBoImXiTESlucs7xBLUF3j5FxNiMDoJk99NgqDvOl2%2BHjAghgKRvJs1U8z3uUuH2adwAIYBkfMs3hm8NqdlKBqxdNG4AAKi3hQ7QSilYbLGIXqxjlHkIMQDT8PWZBLzU8Rm1M1kt4n3co8uAkLIQq9Xd0jV7QGuUIFekzhWNWb1hHtMBlIRJCD0fDh3VMSyKnXKEJ2m1DkAJ6VvmuAQih5frHLO5VjXwD810RhF0OhE5t1m%2BuAAihKgUGCrVWubIPTqF2OhBCNqFOQ4oNRnGSbAr5mdf4HlkFx0DQykuIJ2PU0b2bpRAaqfv0lCbHlxohNF7bHVlwJwMGQB9nOJMI0UDQxnrE0y5%2BeTJdGRhwkfXsIHxLAMxMtfMK291DSDqZBrSzgW1xEXo44dhDvTChAn2ikGUyhdWsrfJrjO047837gInwsYkQ1Gm9pVLnS4mHACB0u7aoQ99olYrjvwV7CmBmYWH8x5mhA6TxTGfAJY6n8QUAjNAYcgjSRdDNs24SAISZwBymYNCi8zTQTgfXY%2FcCbwG6OUUdxZRTxQsU0EUjAQIK0EAzl%2Bkk6CVOtGdBJsVU8CiL8ZGB6OEqbTRyngDnuUArV%2Bihf%2BhDdZO3YoBmw9YAMvFRgZ8KfJZrSz9dXKGFCwQIUE8jF%2BngeuIHnZQALBgjuJNF%2BHmQkpjLWcT66KSdZv4jQIAGmrhEJzfsQ5UigKV5FpNYzCOUMzEOxoBbLx200WQOVQOtXKabfiA9gChGNnexBD8LKLrp5hWimyu00kA95wiQx2bGpQUQHZRs7uYh%2FMyncMh7aB99jB7Ue2gAFoyRTGUpfsoY74puJQNgwRjFNJZRzQOMSwMjSB21KTYXQA73Ukk18yhIGqODY%2Bzma1rSSqMAcplOJdXMJX9IGGHqOcjnkbOT4cY4CiCPGSxnBaXkD%2BLay6%2Fs4QABQq6LuxAao3K9rh90Nc7On%2BDXrcsgAhjLTKpYzkxuwwBuUMd%2B9vEnN4ZpyxdC%2BVqhTQroF60d7Pf9%2F%2FjWo01%2B4cF9AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA4LTEwVDA1OjE4OjIzLTA0OjAwqL3qhAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wOC0xMFQwNToxODoyMy0wNDowMNngUjgAAAAASUVORK5CYII%3D)](https://marketplace.visualstudio.com/items?itemName=nuke.support)
 [![Downloads](https://img.shields.io/vscode-marketplace/d/nuke.support.svg?label=downloads&style=flat-square&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY%2Fl8WUAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTnU1rJkAAABrUlEQVR4XuXQQW7DMAxE0Rw1R%2BtN3XAjBOpPaptfsgkN8DazIDB8bNu2NCxXguVKsFwJlrJs6KYGS1k2dFODpSwbuqnBUpYN3dRgKcuGbmqwlGVDNzVYyrKhmxosZdnQTQ2WsmzopgZLWTZ0U4OlLBu6qcFSlg3d1GApy4ZuarCUZUM3NVjKsqGbGixl2dBNDZaybOimBktZNnRTg6UsG7qpwVKWDd3UYPnB86VKfl5owx9YflHhCbvHByz%2FcecnHBofsNzhjk84PD5gudOdnnBqfMDygDs84fT4gOVBVz4hNT5gecIVT0iPD1ieNPMJyviAZcKMJ2jjA5ZJI5%2Bgjg9YCkY8QR8fsJSYTxgyPmApMp4wbHzAUpZ5wtDxAcsBzjxh%2BPiA5SBHnjBlfMByoD1PmDY%2BYDnYtydMHR%2BwnICeMH18wHKS9ydcMj5gOVE84bLxAcuVYLkSLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLDvVQ5saLFeC5UqwXAmW69gev7WIMc4gs9idAAAAAElFTkSuQmCC)](https://marketplace.visualstudio.com/items?itemName=nuke.support)
@@ -24,6 +23,8 @@
 - CLT wrappers for over 30+ of the most popular .NET tools
 
 ### Features
+
+<!-- BEGIN DESCRIPTION -->
 
 - Task provider to simply run Nuke targets
 - Codelens on build targets to directly run or debug them
@@ -74,6 +75,8 @@ The configuration object accepts these properties:
 | Name        | Description                                       |
 | ----------- | ------------------------------------------------- |
 | ntarget     | Creates an empty Nuke target                      |
+
+<!-- END DESCRIPTION -->
 
 ### Contributing
 
