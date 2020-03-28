@@ -3,7 +3,7 @@
   "displayName": "NUKE Support",
   "publisher": "nuke",
   "description": "Adds support for NUKE. A cross-platform build automation system for C# developers.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/nuke-build/vscode"
