@@ -83,7 +83,7 @@
         "nuke.buildProjectPattern": {
           "scope": "resource",
           "type": "string",
-          "default": "*build/*build*.csproj",
+          "default": "**/build/*build*.csproj",
           "description": "Glob pattern to detect Nuke build projects"
         }
       }
